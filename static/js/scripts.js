@@ -3,7 +3,7 @@
 let pokemonRepository = (function () {
     let pokemonList = [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-  
+    /*Function should add the Pokemon to the pokemonList array*/
     function add(pokemon) {
       if (
         typeof pokemon === "object" &&
@@ -14,11 +14,12 @@ let pokemonRepository = (function () {
         console.log("pokemon is not correct");
       }
     }
+    /*Function should return the pokemonList array*/
     function getAll() {
       return pokemonList;
     }
     //Function that is reading html elements and then passing list of pokemons to each button
-   //Event listener is passing more information about each pokemon we click, but on console for now
+    //Event listener is passing more information about each pokemon we click, but on console for now
     function addListItem(pokemon) {
       let pokemonList = document.querySelector(".pokemon-list");
       let listpokemon = document.createElement("li");
