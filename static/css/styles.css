@@ -65,8 +65,70 @@ body
     background-color: lightskyblue;
     width: 400px;
     height: 70px;
+    justify-content: center;
   }
-  button:hover, button:focus {
+  .pokemon-list{
+      text-align: center;
+  }
+  .pokemon-list>li{
+      text-align:center;
+  }
+  #modal-container{
+      padding: 15px;
+      position: fixed;
+      box-sizing: border-box;
+      background: gray;
+
+      /* to show it above other content */
+      z-index: 999;
+
+      /*center the modal*/
+      display: grid;
+      text-align: center;
+  }
+  .modal {
+    margin: auto;
+	display: inline-block;
+	box-sizing: border-box;
+	background: #fff;
+	padding: 15px;
+	width: 100%;
+	max-width: 700px;
+	text-align: left;
+  }
+  .modal-close {
+	float: right;
+	-webkit-appearance: none;
+	border: 0;
+	background: none;
+	color: black;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.modal h1 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 70px;
+}
+.modal p {
+	margin-bottom: 5px;
+	font-size: 24px;
+}
+.modal-img{
+	max-width: 100%;
+	max-height: 100%;
+	float: right;
+}
+
+#modal-container {
+	display: none;
+}
+
+#modal-container.is-visible {
+	/* CSS for modal container - add your own desired CSS styles here */
+	display: block;
+}
+button:hover, button:focus {
     /* lets the mouse appear as a hand when hovering over the button */
     cursor: pointer;
     /* reduces the opacity of the button to 80% */
