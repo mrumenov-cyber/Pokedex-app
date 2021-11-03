@@ -6,9 +6,10 @@ let pokemonRepository = (function () {
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
     
     //Create a variable that contains the place of the container
-    let modalContainer = document.querySelector('#modal-container');
+    let modalContainer = document.querySelector('.modal-container');
     
-    function showModal (pokemon){
+    
+    function showModal (pokemon) {
         modalContainer.innerHTML='';
         let type = pokemon.types[0].type.name;
         // Creating new button that contains pokemon details
@@ -42,24 +43,32 @@ let pokemonRepository = (function () {
         modal.appendChild(heightElement);
         modal.appendChild(typeElement);
         modal.appendChild(img);
-        modal.appendChild(modal);
+        modalContainer.appendChild(modal);
         //Adding visiability to modal - when we want to show it
         modalContainer.classList.add('is-visible');
+        console.log('trying to display the modal', modalContainer)
     }
+
     //This function hides modal when we click X, outise the box or esc
     function hideModal() {
-        modalContainer.classList.remove('is.visible');
+        modalContainer.classList.remove('is-visible');
+        modalContainer.classList.add('modal-container');
     }
+
     //Hide modal on escape button
     window.addEventListener('keydown', (e) => {
         if(e.key === 'Escape' && modalContainer.classList.contains('is-visible')){
             hideModal();
         }
     });
+
     // Hide modal on click outside the modal
     modalContainer.addEventListener('click', (e) => {
         // Closes only if the user clicks directly on the overlay
-        let target = e.target;
+
+        hideModal();
+        let target = e.target.parentElement.parentElement;
+        console.log(target);
         if (target === modalContainer) {
           hideModal();
         }
@@ -92,7 +101,7 @@ let pokemonRepository = (function () {
         let button = document.createElement('button');
         button.innerText = 'Loading Pokemon List...';
         button.classList.add('button-style');
-        loadingMessage.Msg.appendChild(button);
+        loadingMessage.appendChild(button);
     }
 
     /* A function that hide the
@@ -134,7 +143,7 @@ let pokemonRepository = (function () {
         };
         add(pokemon);
       });
-      hideLoadingMessage();
+      // hideLoadingMessage();
     }).catch(function (e) {
       hideLoadingMessage();
       console.error(e);
@@ -144,16 +153,18 @@ let pokemonRepository = (function () {
     function loadDetails(item) {
         let url = item.detailsUrl;
         showLoadingMessage();
+
+        console.log('url', url);
         return fetch(url).then(function (response) {
           return response.json();
         }).then(function (details) {
           hideLoadingMessage();
           showModal(details);
-          item.imageUrl = details.sprites.front_default;
-          item.height = details.height;
-          item.types = details.types;
+          // item.imageUrl = details.sprites.front_default;
+          // item.height = details.height;
+          // item.types = details.types;
         }).catch(function (e) {
-          hideLoadingMessage();
+          // hideLoadingMessage();
           console.error(e);
         });
       }
