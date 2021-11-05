@@ -27,15 +27,16 @@ let pokemonRepository = (function () {
         let titleElement = document.createElement('h1');
         titleElement.innerText = pokemon.forms[0].name;
         //Create paragraph that contains pokemon height
-        let heightElement = document.querySelector('p');
+        let heightElement = document.createElement('p');
         heightElement.innerText='Height: '+pokemon.height/10 +' m';
         // Paragraph that contains pokemon type
-        let typeElement = document.querySelector('p');
-        typeElement.innerText = 'Type' +type;
+        let typeElement = document.createElement('p');
+        typeElement.innerText = 'Type: ' +type;
         // Add pokemon image url
         let img = document.createElement('img');
         img.classList.add('modal-img');
-        img.src = pokemon.sprites.other['official-artwork']['font_default'];
+        img.src = pokemon.sprites.other['official-artwork']['front_default'];
+
 
         //Add the new created elements
         modal.appendChild(closeButtonElement);
@@ -51,8 +52,9 @@ let pokemonRepository = (function () {
 
     //This function hides modal when we click X, outise the box or esc
     function hideModal() {
+        console.log('Inside HideModal function');
         modalContainer.classList.remove('is-visible');
-        modalContainer.classList.add('modal-container');
+
     }
 
     //Hide modal on escape button
@@ -64,15 +66,14 @@ let pokemonRepository = (function () {
 
     // Hide modal on click outside the modal
     modalContainer.addEventListener('click', (e) => {
-        // Closes only if the user clicks directly on the overlay
+      // Closes only if the user clicks directly on the overlay
 
+      let target = e.target;
+      console.log(target);
+      if (target === modalContainer) {
         hideModal();
-        let target = e.target.parentElement.parentElement;
-        console.log(target);
-        if (target === modalContainer) {
-          hideModal();
-        }
-      });
+      }
+    });
 
 
     /*Function should add the Pokemon to the pokemonList array*/
@@ -100,7 +101,7 @@ let pokemonRepository = (function () {
         let loadingMessage = document.querySelector('main');
         let button = document.createElement('button');
         button.innerText = 'Loading Pokemon List...';
-        button.classList.add('button-style');
+        button.classList.add('loading-button');
         loadingMessage.appendChild(button);
     }
 
