@@ -186,7 +186,10 @@ let pokemonRepository = (function () {
     };
   })();
   
-  
+  $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').trigger('focus')
+  })
+
   pokemonRepository.loadList().then(function () {
     pokemonRepository.getAll().forEach(function (pokemon) {
       pokemonRepository.addListItem(pokemon);
