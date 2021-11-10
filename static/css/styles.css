@@ -54,7 +54,6 @@ main{
   }
   .button-style{
     color:white;
-    font-weight: 200px;
     border: 2px solid rgb(0, 179, 255);
     padding: 10px;
     margin-right: 20px;
@@ -71,51 +70,12 @@ main{
     text-transform: capitalize;
     letter-spacing: 1.2px;
   }
-  .loading-button{
-    color: black;
-    font-size: 25px;
-    padding:10px;
-    background-color: white;
-    text-align: center;
-    position: fixed;
-  }
   .pokemon-list{
       text-align: center;
   }
   .pokemon-list>li{
       text-align:center;
   }
-  .modal-container {
-    position: fixed;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-top: 100px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    /* to show it above other content */
-    z-index: 999;
-    /* to allow scrolling if the screen is not high enough*/
-    overflow: auto;
-    /* this is used to center the modal */
-    display: grid;
-    text-align: center;
-  }
-  .modal {
-    margin-top: 110px;
-    display: inline-block;
-    box-sizing: border-box;
-    background: #fff;
-    padding: 15px;
-    width: 80%;
-    max-width: 600px;
-    max-height: 800px;
-    text-align: left;
-    justify-self: center;
-  }
-  
   .modal-close {
     float: right;
     -webkit-appearance: none;
@@ -124,32 +84,16 @@ main{
     color: #777;
     text-decoration: underline;
   }
-.modal h1 {
-	margin-top: 0;
-	margin-bottom: 10px;
-	font-size: 65px;
-}
-.modal p {
-	margin-bottom: 5px;
-	font-size: 24px;
-}
 .modal-img{
 	max-width: 40%;
 	max-height: 50%;
 	float: right;
   margin-right: 40px;
 }
-.loading-message{
-  display: block;
-  position:fixed;
-  justify-content: center;
-  justify-self: center;
-  text-align: center;
-}
-.modal-container {
+#modal-container {
 	display: none;
 }
-.modal-container.is-visible {
+#modal-container.is-visible {
   /* CSS for modal container - add your own desired CSS styles here */
   display: block;
 }
