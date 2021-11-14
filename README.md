@@ -5,9 +5,9 @@
 https://mrumenov-cyber.github.io/Pokedex-app/
 
 # ScreenShots
-![ScreenShot](https://raw.github.com/mrumenov/Pokedex-app/static/img/Screenshot1.png?raw=true "Screenshot 1")
-![ScreenShot](https://raw.github.com/mrumenov/Pokedex-app/static/img/Screenshot2.png?raw=true "Screenshot 1")
-![ScreenShot](https://raw.github.com/mrumenov/Pokedex-app/static/img/Screenshot3.png?raw=true "Screenshot 1")
+![ScreenShot](https://github.com/mrumenov-cyber/Pokedex-app/blob/main/static/img/Screenshot1.png "Screenshot 1")
+![ScreenShot](https://github.com/mrumenov-cyber/Pokedex-app/blob/main/static/img/Screenshot2.png "Screenshot 2")
+![ScreenShot](https://github.com/mrumenov-cyber/Pokedex-app/blob/main/static/img/Screenshot3.png "Screenshot 3")
 
  # TECH tools used
  - JavaScript
