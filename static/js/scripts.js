@@ -1,53 +1,12 @@
 // A new pokemonRepository variable to hold what your IIFE will return, 
+
 // then assigned IIFE to that variable
 const pokemonRepository = (function () {
     const pokemonList = [];
     // The url to the extended API with pokemon data we are fetching
-    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-
-
-    function showModal(pokemon) {
-        const modalTitle = document.querySelector('.modal-title');
-        const modalBody = document.querySelector('.modal-body');
-
-        modalTitle.innerText = '';
-        modalBody.innerText = '';
-
-        //Create h1 tag with Pokemon name
-        const titleElement = document.createElement('h1');
-        titleElement.innerText = pokemon.forms[0].name;
-
-        // Add pokemon image url
-        const img = document.createElement('img');
-        img.src = pokemon.sprites.other['official-artwork']['front_default'];
-        img.classList.add('modal-img');
-
-
-        //Create paragraph that contains pokemon height
-        const heightElement = document.createElement('p');
-        heightElement.innerText='Height: '+pokemon.height/10 +' m';
-
-
-        //create element for pokemon in modal content
-        const pokemonTypes = [];
-
-        Object.keys(pokemon.types).forEach(key => {
-              pokemonTypes.push(' ' + pokemon.types[key].type.name);
-    });
-
-
-        // Paragraph that contains pokemon type
-        const typesElement = document.createElement('p');
-        typesElement.innerText = 'Type: ' + pokemonTypes;
-
-
-        //Add the new created elements
-        modalTitle.appendChild(titleElement);
-        modalBody.appendChild(heightElement);
-        modalBody.appendChild(typesElement);
-        modalBody.appendChild(img);
-    }
-
+    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=40';
+    let nextUrl = '';
+    let previousUrl = '';
 
     /*Function should add the Pokemon to the pokemonList array*/
     function add(pokemon) {
@@ -61,7 +20,15 @@ const pokemonRepository = (function () {
           
     /*Function should return the pokemonList array*/
     function getAll() {
-          return pokemonList;
+      return pokemonList;
+    }
+
+    function getNextUrl(){
+          return nextUrl;
+          }
+
+    function getPreviousUrl(){
+          return previousUrl;
           }
 
     //Function that is reading html elements and then passing list of pokemons to each button
@@ -85,10 +52,13 @@ const pokemonRepository = (function () {
 
     /* function to load each pokemon wich is defined
     in the API URL and fetch it to the inside the pokemonList array */
-    function loadList() {
+    function loadList(apiUrl) {
       return fetch(apiUrl).then(function (response) {
       return response.json();
         }).then(function (json) {
+          //console.log(json);
+          nextUrl = json.next;
+          previousUrl = json.previous;
         json.results.forEach(function (item) {
             const pokemon = {
               name: item.name,
@@ -96,6 +66,9 @@ const pokemonRepository = (function () {
             };
           add(pokemon);
           });
+
+          //setup pagination
+          setupPagination();
         }).catch(function (e) {
           console.error(e);
       })
@@ -103,7 +76,6 @@ const pokemonRepository = (function () {
 
     function loadDetails(item) {
         const url = item.detailsUrl;
-
         console.log('url', url);
         return fetch(url).then(function (response) {
           return response.json();
@@ -123,22 +95,59 @@ const pokemonRepository = (function () {
           });
     }
 
-    // Function to search for pokemon using search bar
+    // TODO
+    // 1. Clear the existing pokemon list
+    // 2. Check if the getNextUrl or getPreviousUrl has value, only you show the buttons otherwise you set a css class "disabled"
 
-    const SearchBar = document.querySelector('#filter');
+    function clearPokemonList() {
+      const pokemonListUI = document.querySelector(".pokemon-list");
+      pokemonListUI.innerHTML = '';
+      pokemonList.length = 0;
+    }
 
-    SearchBar.addEventListener('input', function() {
-        const pokemonListItem = document.querySelectorAll('li');
-        const filter = SearchBar.value.toUpperCase();
-
-        pokemonListItem.forEach(function(pokemon){
-            if (pokemon.innerText.toUpperCase().indexOf(filter) === 0) {
-                pokemon.style.display = 'block';
-            } else {
-                pokemon.style.display = 'none';
-            }
+    function setupPagination(nextUrl, previousUrl){
+        // Next Button
+        const nextBtn = document.getElementById('btn-next');
+        if (!getNextUrl()) {
+          //alert(getNextUrl())
+          nextBtn.setAttribute("disabled", "");
+          nextBtn.style.backgroundColor = "grey";
+        }
+        else {
+          nextBtn.removeAttribute("disabled");
+          nextBtn.style.backgroundColor = "rgb(255, 51, 0)";
+        }
+        nextBtn.addEventListener('click', function() {
+            clearPokemonList();
+            loadList(getNextUrl()).then(function () {
+              getAll().forEach(function (pokemon) {
+                addListItem(pokemon);
+              });
+          });
         });
-});
+
+        // Previous Button
+        const previousBtn = document.getElementById('btn-previous');
+        if (!getPreviousUrl()) {
+          //alert(getPreviousUrl())
+          previousBtn.setAttribute("disabled", "");
+          previousBtn.style.backgroundColor = "grey";
+        }
+        else {
+          previousBtn.removeAttribute("disabled");
+          previousBtn.style.backgroundColor = "rgb(255, 51, 0)";
+        }
+
+        previousBtn.addEventListener('click', function() {
+          clearPokemonList();
+          loadList(getPreviousUrl()).then(function () {
+            getAll().forEach(function (pokemon) {
+              addListItem(pokemon);
+            });
+        });
+        });
+
+    }
 
 return {
           add,
@@ -148,10 +157,12 @@ return {
           loadDetails,
           showDetails,
           showModal,
+          getNextUrl,
+          getPreviousUrl,
         };
 })();
 
-pokemonRepository.loadList().then(function () {
+pokemonRepository.loadList('https://pokeapi.co/api/v2/pokemon/?limit=40').then(function () {
     pokemonRepository.getAll().forEach(function (pokemon) {
     pokemonRepository.addListItem(pokemon);
     });

@@ -73,6 +73,25 @@ p{
     text-transform: capitalize;
     letter-spacing: 1.2px;
   }
+  #btn-previous {
+    padding: 4px;
+    display: inline;
+    margin-right: 10px;
+    background-color: rgb(255, 51, 0);
+    color: white;
+  }
+  #btn-next{
+    padding: 4px;
+    display: inline;
+    margin-left: 10px;
+    background-color: rgb(255, 51, 0);
+    color: white;
+  }
+  .footer-buttons{
+    display: flex;
+    justify-content: center;
+    margin: 25px; 
+  }
   .pokemon-list{
       text-align: center;
   }
